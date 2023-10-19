@@ -1,0 +1,64 @@
+[gd_scene load_steps=9 format=3 uid="uid://bynfu867jykrs"]
+
+[ext_resource type="Script" path="res://Mob.cs" id="1_1h355"]
+[ext_resource type="Texture2D" uid="uid://db632bod5yjy8" path="res://art/enemyFlyingAlt_1.png" id="2_5hije"]
+[ext_resource type="Texture2D" uid="uid://bokbr7q58jh2h" path="res://art/enemyFlyingAlt_2.png" id="3_baoal"]
+[ext_resource type="Texture2D" uid="uid://bx8mkcql8odl6" path="res://art/enemySwimming_1.png" id="4_llsjt"]
+[ext_resource type="Texture2D" uid="uid://bcblsnaeharaa" path="res://art/enemySwimming_2.png" id="5_d67hv"]
+[ext_resource type="Texture2D" uid="uid://b7oiyiknirx1g" path="res://art/enemyWalking_1.png" id="6_jsnt8"]
+[ext_resource type="Texture2D" uid="uid://de1nohw0u656e" path="res://art/enemyWalking_2.png" id="7_lnjp8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mvr1b"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_5hije")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_baoal")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_llsjt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_d67hv")
+}],
+"loop": true,
+"name": &"swim",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_jsnt8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_lnjp8")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 3.0
+}]
+
+[node name="Mob" type="RigidBody2D"]
+rotation = 1.5708
+collision_mask = 0
+gravity_scale = 0.0
+script = ExtResource("1_1h355")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
+sprite_frames = SubResource("SpriteFrames_mvr1b")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]
+enable_node_path = NodePath("../CollisionShape2D")
+
+[connection signal="screen_exited" from="VisibleOnScreenEnabler2D" to="." method="OnVisibleOnScreenNotifier2DScreenExited"]
